@@ -1,8 +1,9 @@
 using IndexOutOfRangeException = System.IndexOutOfRangeException;
+using Array = System.Array;
 using System.Runtime.CompilerServices;
-using SimpleStream.BitHacks;
+using LodeBIT.BitHacks;
 
-namespace SimpleStream.Buffer {
+namespace LodeBIT.Buffer {
     class BitStream {
         private int iterator, capacity, resizeAmount;
         private byte[] memory;
@@ -47,6 +48,14 @@ namespace SimpleStream.Buffer {
             ((iterator + (alignment - 1)) & ~(alignment - 1));
 
         /// <summary>
+        /// Sets all bits in the stream to zero.
+        /// </summary>
+        public void Clear() {
+            for(int i = 0; i < capacity; i++)
+                memory[i] = 0x0;
+        }
+
+        /// <summary>
         /// Resizes the array by adding the number of bytes according to the ResizeAmount, unless the ResizeAmount is smaller-than-or-equal-to 0.
         /// </summary>
         public void Grow() {
@@ -55,6 +64,12 @@ namespace SimpleStream.Buffer {
             capacity += resizeAmount;
             System.Array.Resize(ref memory, Align(iterator, TwiddleBIT.BITSOF_BYTE) / TwiddleBIT.BITSOF_BYTE);
         }
+
+        /// <summary>
+        /// Shrinks the stream to the number of bytes required for the current iterator position.
+        /// </summary>
+        public void Shrink() =>
+            Array.Resize(ref memory, Align(iterator, TwiddleBIT.BITSOF_BYTE) / TwiddleBIT.BITSOF_BYTE);
 
         /// <summary>
         /// Copies the bits as a UINT to the bitstream.
