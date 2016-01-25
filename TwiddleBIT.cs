@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace LodeBIT.BitHacks {
+namespace SimpleStream.BitHacks {
     public static class TwiddleBIT {
         /// <summary>
         /// Gets the number of bits in an unsigned 32-bit integer.
