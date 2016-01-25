@@ -1,8 +1,8 @@
 using IndexOutOfRangeException = System.IndexOutOfRangeException;
 using System.Runtime.CompilerServices;
-using LodeBIT.BitHacks;
+using SimpleStream.BitHacks;
 
-namespace LodeBIT.Buffer {
+namespace SimpleStream.Buffer {
     class BitStream {
         private int iterator, capacity, resizeAmount;
         private byte[] memory;
