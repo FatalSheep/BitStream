@@ -36,6 +36,7 @@ namespace SimpleStream {
         public BitStream(int capacity, int resizeAmount) {
             memory = new byte[Align(iterator, TwiddleBIT.BITSOF_BYTE) / TwiddleBIT.BITSOF_BYTE];
             this.capacity = capacity;
+            this.resizeAmount = resizeAmount;
         }
     
         /// <summary>Gets the iterator aligned to the specified alignment.</summary>
