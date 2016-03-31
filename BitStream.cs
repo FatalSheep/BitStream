@@ -62,14 +62,14 @@ namespace SimpleStream {
             if(resizeAmount <= 0)
                 return;
             capacity += resizeAmount;
-            System.Array.Resize(ref memory, Align(iterator, TwiddleBIT.BITSOF_BYTE) / TwiddleBIT.BITSOF_BYTE);
+            System.Array.Resize(ref memory, Align(iterator + resizeAmount, TwiddleBIT.BITSOF_BYTE) / TwiddleBIT.BITSOF_BYTE);
         }
     
         /// <summary>
         /// Shrinks the stream to the number of bytes required for the current iterator position.
         /// </summary>
         public void Shrink() =>
-            Array.Resize(ref memory, Align(iterator, TwiddleBIT.BITSOF_BYTE) / TwiddleBIT.BITSOF_BYTE);
+            Array.Resize(ref memory, Align(iterator - resizeAmount, TwiddleBIT.BITSOF_BYTE) / TwiddleBIT.BITSOF_BYTE);
     
         /// <summary>
         /// Copies the bits as a UINT to the bitstream.
@@ -112,11 +112,11 @@ namespace SimpleStream {
             TwiddleBIT.GetBits(memory, count, iterator / TwiddleBIT.BITSOF_BYTE, iterator++ % TwiddleBIT.BITSOF_BYTE);
     
         /// <summary>
-        /// Reads a single bit fro mthe stream.
+        /// Reads a single bit from the stream.
         /// </summary>
         /// <returns>Returns a single bit from the stream at the current iterator bit-index.</returns>
         public bool Read() =>
-            (memory[iterator / TwiddleBIT.BITSOF_BYTE] & (0x1 << (iterator % TwiddleBIT.BITSOF_BYTE))) > 0x0;
+            (memory[iterator / TwiddleBIT.BITSOF_BYTE] & (0x1 << (iterator++ % TwiddleBIT.BITSOF_BYTE))) > 0x0;
     }
     
     public static class TwiddleBIT {
